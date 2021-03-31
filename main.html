@@ -39,37 +39,78 @@
       margin: 0 !important;
       width: 35px;
     }
+
+    .item1 { grid-area: header;}
+    .item2 { grid-area: plot; }
+    .item3 { grid-area: mandelbrot; }
+    .item4 { grid-area: julia; }
+    .item5 { grid-area: footer; }
+
+    .grid-container {
+      display: grid;
+      grid-template-areas:
+        'header header header header header'
+        'plot plot mandelbrot mandelbrot mandelbrot'
+        'plot plot julia julia julia'
+        'footer footer footer footer footer';
+      grid-gap: 10px;
+      padding: 10px;
+      max-height: 1424px;
+    }
+
+    .grid-container > div {
+      text-align: center;
+      padding: 0 0;
+      font-size: 11pt;
+    }
+
   </style>
 </head>
 <body>
 
-<h1 id="pageTitle">Mandelbrot Orbit Visualiser</h1>
+<div class="grid-container">
+  <div class="item1">
+    <h1 id="pageTitle">Mandelbrot Orbit Visualiser</h1>
 
-<div id="controls">
-  <div>
-    <p>C real part (Re)</p>
-    <input type="range" min="-2.5" max="1" step="0.01" class="slider" oninput="xSlideChange(this.value); draw();" id="mandelbrotXRange">
-    <div id="xRangeOutput"></div>
+    <div id="controls">
+      <div>
+        <p>C real part (Re)</p>
+        <input type="range" min="-2.5" max="1" step="0.01" class="slider" oninput="xSlideChange(this.value); draw();" id="mandelbrotXRange">
+        <div id="xRangeOutput"></div>
+      </div>
+      <div>
+        <p>C imaginary part (Im)</p>
+        <input type="range" min="-1" max="1" step="0.01" class="slider" oninput="ySlideChange(this.value); draw();" id="mandelbrotYRange">
+        <div id="yRangeOutput"></div>
+      </div>
+      <div>
+        <p>Max iterations</p>
+        <input type="range" min="10" max="1000" step="10" class="slider" oninput="iterationsSlideChange(this.value); draw();" id="maxIterationsRange">
+        <div id="iterationsRangeOutput"></div>
+      </div>
+    </div>
+
+    <p id="cExpression"></p>
   </div>
-  <div>
-    <p>C imaginary part (Im)</p>
-    <input type="range" min="-1" max="1" step="0.01" class="slider" oninput="ySlideChange(this.value); draw();" id="mandelbrotYRange">
-    <div id="yRangeOutput"></div>
+  <div class="item2" id="mandelbrot-plot"></div>
+  <div class="item3">
+    <a target="blank" href="https://smoothstep.io/anim/389104e23227">
+      <p>Mandelbrot set</p>
+      <img src="pictures/mandelbrot set.png" height="300" alt="example image of mandelbrot set">
+    </a>
   </div>
-  <div>
-    <p>Max iterations</p>
-    <input type="range" min="10" max="1000" step="10" class="slider" oninput="iterationsSlideChange(this.value); draw();" id="maxIterationsRange">
-    <div id="iterationsRangeOutput"></div>
+  <div class="item4">
+    <a target="blank" href="https://smoothstep.io/anim/389104e23227">
+      <p>Julia set</p>
+      <img src="pictures/julia set.png" height="300" alt="example image of julia set">
+    </a>
+  </div>
+  <div class="item5">
+    <p>Used plot library: <a target="blank" href="https://plot.ly/javascript/">Plotly</a></p>
   </div>
 </div>
 
-<p id="cExpression"></p>
 
-<div id="mandelbrot-plot"></div>
-
-<p>
-  Used plot library: <a href="https://plot.ly/javascript/">Plotly</a>
-</p>
 
 <script>
   window.onload = function(){
@@ -112,8 +153,8 @@
       let yValuesToPlot = [];
 
       // complex number c real and imaginary parts, respectively
-      let cx = parseFloat(document.getElementById("mandelbrotXRange").value)
-      let cy = parseFloat(document.getElementById("mandelbrotYRange").value);
+      const cx = parseFloat(document.getElementById("mandelbrotXRange").value)
+      const cy = parseFloat(document.getElementById("mandelbrotYRange").value);
 
       // update c value text output
       updateCExpression(cx, cy);
@@ -126,7 +167,7 @@
         if (x*x + y*y > 2*2){
           break;
         }
-        let xTemp = x*x - y*y + cx;
+        const xTemp = x*x - y*y + cx;
         y = 2*x*y + cy;
         x = xTemp;
         xValuesToPlot.push(x);
