@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Mandelbrot Orbit Visualiser</title>
+  <script src="https://unpkg.com/mathjs@9.3.0/lib/browser/math.js"></script>
+  <script src="https://cdn.plot.ly/plotly-1.35.2.min.js"></script>
+
+  <style>
+    body, html, input {
+      font-family: sans-serif;
+      font-size: 11pt;
+    }
+
+    #cExpression {
+      margin-left: 20px;
+      height: 30px;
+    }
+
+    #pageTitle {
+      margin-left: 20px;
+    }
+
+    #controls {
+      display: block;
+    }
+
+    #controls div {
+      display: inline-block;
+      margin: 0px 20px 0 20px;
+      vertical-align: top;
+    }
+
+    #controls p {
+      margin: 0;
+    }
+
+    #controls div div {
+      margin: 0 !important;
+      width: 35px;
+    }
+  </style>
+</head>
+<body>
+
+<h1 id="pageTitle">Mandelbrot Orbit Visualiser</h1>
+
+<div id="controls">
+  <div>
+    <p>C real part (Re)</p>
+    <input type="range" min="-2.5" max="1" step="0.01" class="slider" oninput="xSlideChange(this.value); draw();" id="mandelbrotXRange">
+    <div id="xRangeOutput"></div>
+  </div>
+  <div>
+    <p>C imaginary part (Im)</p>
+    <input type="range" min="-1" max="1" step="0.01" class="slider" oninput="ySlideChange(this.value); draw();" id="mandelbrotYRange">
+    <div id="yRangeOutput"></div>
+  </div>
+  <div>
+    <p>Max iterations</p>
+    <input type="range" min="10" max="1000" step="10" class="slider" oninput="iterationsSlideChange(this.value); draw();" id="maxIterationsRange">
+    <div id="iterationsRangeOutput"></div>
+  </div>
+</div>
+
+<p id="cExpression"></p>
+
+<div id="mandelbrot-plot"></div>
+
+<p>
+  Used plot library: <a href="https://plot.ly/javascript/">Plotly</a>
+</p>
+
+<script>
+  window.onload = function(){
+    const STARTING_CX = -0.66;
+    const STARTING_CY = -0.29;
+    const MAX_ITERATIONS = 200;
+
+    document.getElementById("mandelbrotXRange").value = STARTING_CX;
+    document.getElementById("mandelbrotYRange").value = STARTING_CY;
+    document.getElementById("maxIterationsRange").value = MAX_ITERATIONS;
+
+    // update text output accordingly
+    xSlideChange(document.getElementById("mandelbrotXRange").value);
+    ySlideChange(document.getElementById("mandelbrotYRange").value);
+    iterationsSlideChange(document.getElementById("maxIterationsRange").value);
+
+    // plot now that everything is set up
+    draw();
+  }
+
+  function xSlideChange(newVal){
+    document.getElementById("xRangeOutput").innerHTML = newVal;
+  }
+
+  function ySlideChange(newVal){
+    document.getElementById("yRangeOutput").innerHTML = newVal;
+  }
+
+  function iterationsSlideChange(newVal){
+    document.getElementById("iterationsRangeOutput").innerHTML = newVal;
+  }
+
+  function updateCExpression(re, im){
+    document.getElementById("cExpression").innerHTML = "c = " + re + (im >= 0 ? " + " : " - ") + Math.abs(im) + "i";
+  }
+
+  function draw() {
+    try {
+      let xValuesToPlot = [];
+      let yValuesToPlot = [];
+
+      // complex number c real and imaginary parts, respectively
+      let cx = parseFloat(document.getElementById("mandelbrotXRange").value)
+      let cy = parseFloat(document.getElementById("mandelbrotYRange").value);
+
+      // update c value text output
+      updateCExpression(cx, cy);
+
+      // starting position for mandelbrot set
+      let x = 0.0;
+      let y = 0.0;
+      const maxIterations = parseInt(document.getElementById("maxIterationsRange").value);
+      for (let i = 0; i < maxIterations; i++){
+        if (x*x + y*y > 2*2){
+          break;
+        }
+        let xTemp = x*x - y*y + cx;
+        y = 2*x*y + cy;
+        x = xTemp;
+        xValuesToPlot.push(x);
+        yValuesToPlot.push(y);
+      }
+
+      // render the plot using plotly
+      const trace1 = {
+        x: xValuesToPlot,
+        y: yValuesToPlot,
+        mode: 'markers'
+      }
+      const data = [trace1]
+
+      const layout = {
+          autosize: true,
+          width: 800,
+          height: 800,
+          showlegend: false,
+          margin: {
+              t: 20,
+              r: 10,
+              b: 30,
+              l: 30,
+              pad: 0
+          },
+          xaxis: {
+              range: [-2.5, 1.0],
+              fixedrange: true,
+              layer: 'below traces'
+          },
+          yaxis: {
+              range: [-2.5, 1.0],
+              fixedrange: true,
+              layer: 'below traces'
+          },
+          font: {size: 10}
+      };
+
+      Plotly.newPlot('mandelbrot-plot', data, layout, {staticPlot: true})
+    }
+    catch (err) {
+      console.error(err)
+      alert(err)
+    }
+  }
+</script>
+
+</body>
+</html>
