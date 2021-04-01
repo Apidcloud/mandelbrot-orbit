@@ -6,7 +6,6 @@
 
 This project uses Plotly to plot Mandelbrot orbits (with a real and imaginary axes represented in a traditional xy plane).
 
-[Live Demo](https://github.com/Apidcloud/logistic-map)
-
+[Live Demo](https://apidcloud.github.io/mandelbrot-orbit/)
 
 <img src="pictures/screenshot.png?raw=true">
