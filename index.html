@@ -41,18 +41,31 @@
     }
 
     .item1 { grid-area: header;}
-    .item2 { grid-area: plot; }
-    .item3 { grid-area: mandelbrot; }
-    .item4 { grid-area: julia; }
-    .item5 { grid-area: footer; }
+    .item2 { 
+      grid-area: plot;
+      margin-left: 60px;
+    }
+    .item3 { 
+      grid-area: mandelbrot; 
+      margin-left: 20px;
+    }
+    .item4 { 
+      grid-area: julia; 
+      margin-left: 20px;
+    }
+    .item5 { grid-area: imagesOne;}
+    .item6 { grid-area: imagesTwo;}
+    .item7 { grid-area: footer; }
 
     .grid-container {
       display: grid;
       grid-template-areas:
-        'header header header header header'
-        'plot plot mandelbrot mandelbrot mandelbrot'
-        'plot plot julia julia julia'
-        'footer footer footer footer footer';
+        'header header header header header header header'
+        'plot plot plot mandelbrot mandelbrot mandelbrot mandelbrot'
+        'plot plot plot julia julia julia julia'
+        'imagesOne imagesOne imagesOne imagesOne imagesOne imagesOne imagesOne'
+        'imagesTwo imagesTwo imagesTwo imagesTwo imagesTwo imagesTwo imagesTwo'
+        'footer footer footer footer footer footer footer';
       grid-gap: 10px;
       padding: 10px;
       max-height: 1424px;
@@ -66,6 +79,10 @@
 
     .screenshots {
       border: 1px solid #333333;
+    }
+
+    .inline-images {
+      display: inline-block;
     }
 
     .github-corner {
@@ -152,11 +169,73 @@
       </a>
     </div>
     <div class="item5">
+      <div class="inline-images">
+        <a target="blank" href="https://smoothstep.io/anim/389104e23227">
+          <p>Julia set with d = 2.0</p>
+          <img src="pictures/julia set animation.gif" class="screenshots" height="250" alt="example animation of julia set with degree 2">
+        </a>
+      </div>
+      <div class="inline-images">
+        <a target="blank" href="https://smoothstep.io/anim/389104e23227">
+          <p>Julia set with d = 1.5</p>
+          <img src="pictures/julia-set-with-degree-1.5.gif" class="screenshots" height="250" alt="example animation of julia set with degree 1.5">
+        </a>
+      </div>
+      <div class="inline-images">
+        <a target="blank" href="https://smoothstep.io/anim/389104e23227">
+          <p>Multi-Julia set with d = 3.0</p>
+          <img src="pictures/multi-Julia-with-degree-3.gif" class="screenshots" height="250" alt="example animation of julia set with degree 3">
+        </a>
+      </div>
+      <div class="inline-images">
+        <a target="blank" href="https://smoothstep.io/anim/389104e23227">
+          <p>Multi-Julia set with d = 6.0</p>
+          <img src="pictures/multi-Julia-with-degree-6.gif" class="screenshots" height="250" alt="example animation of julia set with degree 6">
+        </a>
+      </div>
+      <div class="inline-images">
+        <a target="blank" href="https://smoothstep.io/anim/389104e23227">
+          <p>Multi-Julia set with d = 93.0</p>
+          <img src="pictures/multi-Julia-with-degree-93.gif" class="screenshots" height="250" alt="example animation of julia set with degree 93">
+        </a>
+      </div>
+    </div>
+    <div class="item6">
+      <div class="inline-images">
+        <a target="blank" href="https://smoothstep.io/anim/389104e23227">
+          <p>Julia set with d = -1.5</p>
+          <img src="pictures/julia-set-with-degree-minus-1.5.gif" class="screenshots" height="250" alt="example animation of julia set with degree minus 1.5">
+        </a>
+      </div>
+      <div class="inline-images">
+        <a target="blank" href="https://smoothstep.io/anim/389104e23227">
+          <p>Mandelbrot set with d = 2.0</p>
+          <img src="pictures/mandelbrot set.png" class="screenshots" height="250" alt="example screenshot of mandelbrot set with degree 2">
+        </a>
+      </div>
+      <div class="inline-images">
+        <a target="blank" href="https://smoothstep.io/anim/389104e23227">
+          <p>Multibrot set with d = 3.0</p>
+          <img src="pictures/multibrot set with degree 3.png" class="screenshots" height="250" alt="example animation of multibrot set with degree 3">
+        </a>
+      </div>
+      <div class="inline-images">
+        <a target="blank" href="https://smoothstep.io/anim/389104e23227">
+          <p>Multibrot set with d = 6.0</p>
+          <img src="pictures/multi-brot-with-degree-6.png" class="screenshots" height="250" alt="example animation of multibrot set with degree 6">
+        </a>
+      </div>
+      <div class="inline-images">
+        <a target="blank" href="https://smoothstep.io/anim/389104e23227">
+          <p>Multibrot set with d = -4.5</p>
+          <img src="pictures/multi-brot-with-degree-minus-4.5.png" class="screenshots" height="250" alt="example screenshot of multibrot set with degree minus 4.5">
+        </a>
+      </div>
+    </div>
+    <div class="item7">
       <p>Used plot library: <a target="blank" href="https://plot.ly/javascript/">Plotly</a></p>
     </div>
   </div>
-
-
 
   <script>
     window.onload = function(){
